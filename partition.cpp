@@ -1,7 +1,11 @@
 // my first program in C++
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
 
-global var for A
+int[] A;
 
 int main()
 {
@@ -10,6 +14,12 @@ int main()
 
     int algorithm = -1;
     std::cin >> algorithm;
+
+    string fileName = argv[3];
+    ifstream inputFile;
+    inputFile.open(fileName);
+       // store into A
+    inputFile.close();
 
   given file, read from it to get list L of 100 ints.
 
@@ -27,18 +37,28 @@ int main()
 
 random_P
 
-kar_karp (P) (A) {
-  create A' based on P and A
-  sort A'
-  pseudo for kar_karp
+//runs karmarkarkarp on the algorithm
+int[] karmarkarKarp(vector<int> p) {
+  // create A' based on P and A
+  // sort A'
+  // pseudo for kar_karp
+    void;
 }
 
-repeated_random
-  for iter 1 to 25,000
-    S' = random_P
-    if kar_karp S' < kar_karp S then S = S'
-  return S
+int[] repeated_random(int[] part) {
+  // for iter 1 to 25,000
+  // S' = random_P
+  // if kar_karp S' < kar_karp S then S = S'
+  // return S
+    void;
+}
 
-hill_climbing
+int[] hill_climbing(int[] part) {
+    void;
+}
 
-sim_anneal
+int[] sim_anneal(int[] part) {
+    void;
+}
+
+
