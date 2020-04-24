@@ -7,12 +7,12 @@ using namespace std;
 
 int[] A;
 
-int main()
+int main(int argv, char *argv[])
 {
-    int flag = -1;
+    int flag = atoi(argv[1]);
     std::cin >> flag;
 
-    int algorithm = -1;
+    int algorithm = atoi(argv[2]);
     std::cin >> algorithm;
 
     string fileName = argv[3];
@@ -21,21 +21,20 @@ int main()
        // store into A
     inputFile.close();
 
-  given file, read from it to get list L of 100 ints.
+//   given file, read from it to get list L of 100 ints.
 
-  create initial random P (generate sequence of n values from range [1,n])
+//   create initial random P (generate sequence of n values from range [1,n])
 
-  // Record amount of time it takes for each algorithm
-  kar_karp (sorted L)
-  repeated_random P
-  hill_climbing P
-  sim_anneal P
-
+//   // Record amount of time it takes for each algorithm
+//   kar_karp (sorted L)
+//   repeated_random P
+//   hill_climbing P
+//   sim_anneal P
 
   std::cout << "Hello World!";
 }
 
-random_P
+// random_P
 
 //runs karmarkarkarp on the algorithm
 int[] karmarkarKarp(vector<int> p) {
