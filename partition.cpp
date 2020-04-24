@@ -7,13 +7,14 @@ using namespace std;
 
 int[] A;
 
-int main()
-{
-    int flag = -1;
-    std::cin >> flag;
+int** random_P(int**, int**, int);
 
-    int algorithm = -1;
-    std::cin >> algorithm;
+
+int main(int argc, char *argv[])
+{
+    int flag = atoi(argv[1]);
+
+    int algorithm = atoi(argv[2]);
 
     string fileName = argv[3];
     ifstream inputFile;
@@ -35,7 +36,10 @@ int main()
   std::cout << "Hello World!";
 }
 
-random_P
+// Generates a random solution sequence P
+int[] random_P(int n) {
+
+}
 
 //runs karmarkarkarp on the algorithm
 int[] karmarkarKarp(vector<int> p) {
