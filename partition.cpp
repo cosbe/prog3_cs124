@@ -6,6 +6,7 @@
 using namespace std;
 
 vector<int> A;
+int A [100];
 
 int main(int argv, char *argv[])
 {
@@ -44,7 +45,7 @@ int[] karmarkarKarp(vector<int> p) {
     void;
 }
 
-int[] repeated_random(int[] part) {
+int[] repeated_random(int part) {
   // for iter 1 to 25,000
   // S' = random_P
   // if kar_karp S' < kar_karp S then S = S'
