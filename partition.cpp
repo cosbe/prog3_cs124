@@ -6,15 +6,13 @@
 using namespace std;
 
 vector<int> A;
-int A [100];
+vector<int> random_P(int);
 
-int main(int argv, char *argv[])
+
+int main(int argc, char *argv[])
 {
     int flag = atoi(argv[1]);
-    std::cin >> flag;
-
     int algorithm = atoi(argv[2]);
-    std::cin >> algorithm;
 
     string fileName = argv[3];
     ifstream inputFile;
@@ -35,17 +33,20 @@ int main(int argv, char *argv[])
   std::cout << "Hello World!";
 }
 
-// random_P
+// Generates a random solution sequence P
+vector<int> random_P(int n) {
 
-//runs karmarkarkarp on the algorithm
-int[] karmarkarKarp(vector<int> p) {
+}
+
+// Runs karmarkarkarp on the algorithm
+vector<int> karmarkarKarp(vector<int> p) {
   // create A' based on P and A
   // sort A'
   // pseudo for kar_karp
     void;
 }
 
-int[] repeated_random(int part) {
+vector<int> repeated_random(int[] part) {
   // for iter 1 to 25,000
   // S' = random_P
   // if kar_karp S' < kar_karp S then S = S'
@@ -53,11 +54,11 @@ int[] repeated_random(int part) {
     void;
 }
 
-int[] hill_climbing(int[] part) {
+vector<int> hill_climbing(int[] part) {
     void;
 }
 
-int[] sim_anneal(int[] part) {
+vector<int> sim_anneal(int[] part) {
     void;
 }
 
