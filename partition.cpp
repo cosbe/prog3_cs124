@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-int[] A;
+vector<int> A;
 
 int main(int argv, char *argv[])
 {
