@@ -10,24 +10,34 @@ vector<int> A;
 vector<int> random_P(int);
 
 int main(int argc, char *argv[]) {
-  srand((unsigned) time(0));
+    srand((unsigned) time(0));
 
-  int flag = atoi(argv[1]);
-  int algorithm = atoi(argv[2]);
-  //testing purposes
-  int n = atoi(argv[3]);
+    int flag = atoi(argv[1]);
+    int algorithm = atoi(argv[2]);
 
-  // vector<int> vect = random_P(n);
+    // Reading file into vector A
+    string fileName = argv[3];
+    std::ifstream file(fileName);
+       // store into A
+    string k;
+    while (std::getline(file, k)){
+        int i = stoi(k);
+        A.push_back(i);
+    }
+    file.close();
 
-  // for (int i = 0; i < n; i++) {
-  //   cout << vect.at(i) << '\n';
-  // }
+//   given file, read from it to get list L of 100 ints.
 
 //   // Record amount of time it takes for each algorithm
 //   kar_karp (sorted L)
 //   repeated_random P
 //   hill_climbing P
 //   sim_anneal P
+
+    for(int i = 0; i < A.size(); i++) {
+        printf(" %d ", A[i]);
+    }
+
 
   std::cout << "Hello World!";
 }
@@ -45,13 +55,23 @@ vector<int> random_P(int n) {
 
 // Runs karmarkarkarp on the algorithm
 vector<int> karmarkarKarp(vector<int> p) {
-  // create A' based on P and A
-  // sort A'
-  // pseudo for kar_karp
+    // create A' based on P and A
+    vector<int> ap(p.size(), 0);
+    for(int i = 0; i < p.size();  i++) {
+        ap[p[i]]+=A[i];
+    }
+
+    // sort A'
+    sort(ap.begin(), ap.end(), greater<int>());
+    for(int i = 0; i < ap.size(); i++) {
+        printf(" %d ", ap[i]);
+    }
+
+    // pseudo for kar_karp
     void;
 }
 
-vector<int> repeated_random(int[] part) {
+vector<int> repeated_random(vector<int> p) {
   // for iter 1 to 25,000
   // S' = random_P
   // if kar_karp S' < kar_karp S then S = S'
@@ -59,10 +79,10 @@ vector<int> repeated_random(int[] part) {
     void;
 }
 
-vector<int> hill_climbing(int[] part) {
+vector<int> hill_climbing(vector<int> p) {
     void;
 }
 
-vector<int> sim_anneal(int[] part) {
+vector<int> sim_anneal(vector<int> p) {
     void;
 }
