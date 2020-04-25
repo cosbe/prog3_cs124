@@ -18,15 +18,14 @@ int main(int argc, char *argv[]) {
     // Reading file into vector A
     string fileName = argv[3];
     std::ifstream file(fileName);
-       // store into A
+
+    // store into A
     string k;
     while (std::getline(file, k)){
         int i = stoi(k);
         A.push_back(i);
     }
     file.close();
-
-//   given file, read from it to get list L of 100 ints.
 
 //   // Record amount of time it takes for each algorithm
 //   kar_karp (sorted L)
@@ -35,7 +34,7 @@ int main(int argc, char *argv[]) {
 //   sim_anneal P
 
     for(int i = 0; i < A.size(); i++) {
-        printf(" %d ", A[i]);
+        printf("%d \n", A[i]);
     }
 }
 
