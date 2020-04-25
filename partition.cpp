@@ -47,11 +47,6 @@ int main(int argc, char *argv[]) {
     // Generating initial random solution
     vector<int> p = random_P(A.size());
 
-    printf("Printing the rand P: \n");
-    for(int i = 0; i < p.size(); i++) {
-        printf("i is: %i and val: %d \n", i,  p[i]);
-    }
-
     switch (algorithm) {
       case 0:
         std::cout << "\nresidual: " << karmarkarKarp(A) << "\n";
@@ -66,6 +61,7 @@ int main(int argc, char *argv[]) {
         std::cout << "\n residual for prr: " << repeated_random(p) << "\n";
         break;
       case 12:
+        std::cout << "\n residual for phc: " << hill_climbing(p) << "\n";
         break;
       case 13:
         break;
@@ -78,6 +74,33 @@ vector<int> random_P(int n) {
 
   for (int i = 0; i < n; i++) {
     vect[i] = (rand() % n + 1);
+  }
+    printf("Printing the rand P: \n");
+    for(int i = 0; i < vect.size(); i++) {
+        printf("i is: %i and val: %d \n", i,  vect[i]);
+    }
+
+  return vect;
+}
+
+// Generates a random neighbor to sequence P
+vector<int> random_neighbor(vector<int> p) {
+  int n = p.size();
+  vector<int> vect;
+  vect = p;
+
+  int j = rand() % n + 1;
+
+  while(true) {
+      int i = rand() % n;
+      if (vect[i] != j) {
+        vect[i] = j;
+          printf("randomn neighbor is: \n");
+          for(int i = 0; i < vect.size(); i++) {
+              printf("i is: %i and val: %d \n", i, vect[i]);
+          }
+        return vect;
+      }
   }
 
   return vect;
@@ -99,7 +122,7 @@ int a_karmarkar_karp (vector<int> p) {
     return(karmarkarKarp(ap));
 }
 
-// Pure Karmarkar Karp on A
+// Pure Karmarkar Karp on input
 int karmarkarKarp(vector<int> a) {
 
     // Karmarkar Karp
@@ -130,7 +153,7 @@ int repeated_random(vector<int> p) {
     int sk = a_karmarkar_karp(s);
 
     for (int i = 0; i < max_iter; i++) {
-        // Generate randomn solution
+        // Generate random solution
         vector<int> sp = random_P(p.size());
         int spk = a_karmarkar_karp(sp);
         if (spk < sk) {
@@ -138,11 +161,24 @@ int repeated_random(vector<int> p) {
             sk = spk;
         }
     }
-    return (sk);
+    return(sk);
 }
 
 int hill_climbing(vector<int> p) {
-    void;
+    vector<int> s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate random neighbor
+        vector<int> sp = random_neighbor(s);
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        }
+    }
+    return(sk);
 }
 
 int sim_anneal(vector<int> p) {
