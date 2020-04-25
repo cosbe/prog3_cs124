@@ -13,6 +13,7 @@ int a_karmarkar_karp(vector<int>);
 int repeated_random(vector<int>);
 int hill_climbing(vector<int>);
 int sim_anneal(vector<int>);
+int max_iter = 25000;
 
 int main(int argc, char *argv[]) {
     srand((unsigned) time(0));
@@ -53,7 +54,7 @@ int main(int argc, char *argv[]) {
 
     switch (algorithm) {
       case 0:
-        std::cout << "\nresidual: " << a_karmarkar_karp(p) << "\n";
+        std::cout << "\nresidual: " << karmarkarKarp(A) << "\n";
         break;
       case 1:
         break;
@@ -62,6 +63,7 @@ int main(int argc, char *argv[]) {
       case 3:
         break;
       case 11:
+        std::cout << "\n residual for prr: " << repeated_random(p) << "\n";
         break;
       case 12:
         break;
@@ -123,11 +125,20 @@ int karmarkarKarp(vector<int> a) {
 }
 
 int repeated_random(vector<int> p) {
-  // for iter 1 to 25,000
-  // S' = random_P
-  // if kar_karp S' < kar_karp S then S = S'
-  // return S
-    void;
+    vector<int> s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate randomn solution
+        vector<int> sp = random_P(p.size());
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        }
+    }
+    return (sk);
 }
 
 int hill_climbing(vector<int> p) {
