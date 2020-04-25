@@ -51,8 +51,23 @@ int main(int argc, char *argv[]) {
         printf("i is: %i and val: %d \n", i,  p[i]);
     }
 
-    int resid = karmarkarKarp(A);
-    std::cout << "\nresidual: " << resid << "\n";
+    switch (algorithm) {
+      case 0:
+        std::cout << "\nresidual: " << a_karmarkar_karp(p) << "\n";
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 11:
+        break;
+      case 12:
+        break;
+      case 13:
+        break;
+    }
 }
 
 // Generates a random solution sequence P
@@ -60,7 +75,7 @@ vector<int> random_P(int n) {
   vector<int> vect(n, -1);
 
   for (int i = 0; i < n; i++) {
-    vect[i] = (rand() % n) + 1;
+    vect[i] = (rand() % n + 1);
   }
 
   return vect;
@@ -71,7 +86,7 @@ int a_karmarkar_karp (vector<int> p) {
     // create A' based on P and A
     vector<int> ap(p.size(), 0);
     for(int i = 0; i < p.size();  i++) {
-        ap[p[i]]+=A[i];
+        ap[p[i] - 1]+=A[i];
     }
 
     printf("AP is: \n");
@@ -84,29 +99,26 @@ int a_karmarkar_karp (vector<int> p) {
 
 // Pure Karmarkar Karp on A
 int karmarkarKarp(vector<int> a) {
-    // Sorting input
-    sort(a.begin(), a.end(), greater<int>());
 
     // Karmarkar Karp
     while(a.size()>1) {
-        //delete all zeroes
-        while(a.back() == 0){
+        // Sort input
+        sort(a.begin(), a.end(), greater<int>());
+
+        //delete all zeroes, keeping the 0 if it is the only element in the array
+        while(a.back() == 0 && a.size() > 1){
             a.pop_back();
         }
+
         if(a.size() <= 1) {
-            break;
+            return a[0];
         }
         //subtract second largest from largest
         a[0]-= a[1];
         //replace second largest with 0
         a[1] = 0;
-        //sort again
-        sort(a.begin(), a.end(), greater<int>());
     }
-    if(a.size() == 0) {
-        a.push_back(0);
-    }
-    //returns residual
+
     return a[0];
 }
 
