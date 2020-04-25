@@ -52,10 +52,13 @@ int main(int argc, char *argv[]) {
         std::cout << "\nresidual: " << karmarkarKarp(A) << "\n";
         break;
       case 1:
+
         break;
       case 2:
+
         break;
       case 3:
+
         break;
       case 11:
         std::cout << "\n residual for prr: " << repeated_random(p) << "\n";
@@ -64,23 +67,24 @@ int main(int argc, char *argv[]) {
         std::cout << "\n residual for phc: " << hill_climbing(p) << "\n";
         break;
       case 13:
+
         break;
     }
 }
 
-// Generates a random solution sequence P
+// Generates a random solution sequence P with size n, values from 1 to n
 vector<int> random_P(int n) {
-  vector<int> vect(n, -1);
+    vector<int> vect(n, -1);
 
-  for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
     vect[i] = (rand() % n + 1);
-  }
+    }
     printf("Printing the rand P: \n");
     for(int i = 0; i < vect.size(); i++) {
         printf("i is: %i and val: %d \n", i,  vect[i]);
     }
 
-  return vect;
+    return vect;
 }
 
 // Generates a random neighbor to sequence P
@@ -102,7 +106,6 @@ vector<int> random_neighbor(vector<int> p) {
         return vect;
       }
   }
-
   return vect;
 }
 
