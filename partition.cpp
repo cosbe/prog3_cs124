@@ -182,5 +182,29 @@ int hill_climbing(vector<int> p) {
 }
 
 int sim_anneal(vector<int> p) {
-    void;
+    vector<int> s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    vector<int> spp;
+    spp = s;
+    int sppk = a_karmarkar_karp(spp);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate random neighbor
+        vector<int> sp = random_neighbor(s);
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        } else {
+// probablity stuff
+        }
+
+        if (sk < sppk) {
+          spp = s;
+        }
+    }
+
+    return(sppk);
 }
