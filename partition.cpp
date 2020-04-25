@@ -37,9 +37,6 @@ int main(int argc, char *argv[])
     for(int i = 0; i < A.size(); i++) {
         printf(" %d ", A[i]);
     }
-
-
-  std::cout << "Hello World!";
 }
 
 // Generates a random solution sequence P
