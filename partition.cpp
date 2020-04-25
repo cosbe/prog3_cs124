@@ -3,24 +3,33 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 vector<int> A;
 vector<int> random_P(int);
 
+int main(int argc, char *argv[]) {
+  srand((unsigned) time(0));
 
-int main(int argc, char *argv[])
-{
-    int flag = atoi(argv[1]);
-    int algorithm = atoi(argv[2]);
+  int flag = atoi(argv[1]);
+  int algorithm = atoi(argv[2]);
+  //testing purposes
+  int n = atoi(argv[3]);
 
-    string fileName = argv[3];
-    ifstream inputFile;
-    inputFile.open(fileName);
-       // store into A
-    inputFile.close();
+  // vector<int> vect = random_P(n);
 
-//   given file, read from it to get list L of 100 ints.
+  // for (int i = 0; i < n; i++) {
+  //   cout << vect.at(i) << '\n';
+  // }
+
+
+  // string fileName = argv[3];
+  // ifstream inputFile;
+  // inputFile.open(fileName);
+  //    // store into A
+  // inputFile.close();
+
 
 //   create initial random P (generate sequence of n values from range [1,n])
 
@@ -35,7 +44,13 @@ int main(int argc, char *argv[])
 
 // Generates a random solution sequence P
 vector<int> random_P(int n) {
+  vector<int> vect(n, -1);
 
+  for (int i = 0; i < n; i++) {
+    vect[i] = (rand() % n) + 1;
+  }
+
+  return vect;
 }
 
 // Runs karmarkarkarp on the algorithm
@@ -61,5 +76,3 @@ vector<int> hill_climbing(int[] part) {
 vector<int> sim_anneal(int[] part) {
     void;
 }
-
-
