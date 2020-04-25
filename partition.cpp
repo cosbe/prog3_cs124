@@ -23,16 +23,6 @@ int main(int argc, char *argv[]) {
   //   cout << vect.at(i) << '\n';
   // }
 
-
-  // string fileName = argv[3];
-  // ifstream inputFile;
-  // inputFile.open(fileName);
-  //    // store into A
-  // inputFile.close();
-
-
-//   create initial random P (generate sequence of n values from range [1,n])
-
 //   // Record amount of time it takes for each algorithm
 //   kar_karp (sorted L)
 //   repeated_random P
