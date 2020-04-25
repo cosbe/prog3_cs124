@@ -3,21 +3,23 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 vector<int> A;
 vector<int> random_P(int);
 
+int main(int argc, char *argv[]) {
+    srand((unsigned) time(0));
 
-int main(int argc, char *argv[])
-{
     int flag = atoi(argv[1]);
     int algorithm = atoi(argv[2]);
 
+    // Reading file into vector A
     string fileName = argv[3];
     std::ifstream file(fileName);
        // store into A
-    string k; 
+    string k;
     while (std::getline(file, k)){
         int i = stoi(k);
         A.push_back(i);
@@ -25,8 +27,6 @@ int main(int argc, char *argv[])
     file.close();
 
 //   given file, read from it to get list L of 100 ints.
-
-// n values from range [1,n])
 
 //   // Record amount of time it takes for each algorithm
 //   kar_karp (sorted L)
@@ -41,7 +41,13 @@ int main(int argc, char *argv[])
 
 // Generates a random solution sequence P
 vector<int> random_P(int n) {
+  vector<int> vect(n, -1);
 
+  for (int i = 0; i < n; i++) {
+    vect[i] = (rand() % n) + 1;
+  }
+
+  return vect;
 }
 
 // Runs karmarkarkarp on the algorithm
@@ -77,5 +83,3 @@ vector<int> hill_climbing(vector<int> p) {
 vector<int> sim_anneal(vector<int> p) {
     void;
 }
-
-
