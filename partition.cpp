@@ -41,6 +41,9 @@ int karmarkarKarp(vector<int> p) {
         while(ap.back() == 0){
             ap.pop_back();
         }
+        if(ap.size() <= 1) {
+            break;
+        }
         //subtract second largest from largest
         ap[0]-= ap[1];
         //replace second largest with 0
@@ -48,7 +51,9 @@ int karmarkarKarp(vector<int> p) {
         //sort again
         sort(ap.begin(), ap.end(), greater<int>());
     }
-
+    if(ap.size() == 0) {
+        ap.push_back(0);
+    }
     //returns residual
     return ap[0];
 }
