@@ -21,5 +21,6 @@ int main () {
     file << n << "\n";// the rand gen number
   }
 
+  file.close();
   return 0;
 }

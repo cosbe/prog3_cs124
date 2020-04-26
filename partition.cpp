@@ -6,7 +6,11 @@
 #include <math.h>
 using namespace std;
 
+//global vars
 vector<long long> A;
+int max_iter = 25000;
+
+// functions
 vector<int> random_P(int, int);
 long long karmarkarKarp(vector<long long>);
 long long a_karmarkar_karp(vector<long long>);
@@ -16,7 +20,6 @@ long long sim_anneal(vector<int> );
 long long prepar_repeated_random(vector<int> );
 long long prepar_hill_climbing(vector<int> );
 long long prepar_sim_anneal(vector<int> );
-int max_iter = 25000;
 
 int main(int argc, char *argv[]) {
     srand((unsigned) time(0));
@@ -215,7 +218,16 @@ long long prepar_sim_anneal(vector<int>  p) {
             s = sp;
             sk = spk;
         } else {
-// probablity stuff
+            // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
+            //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
+            long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
+            long double i = rand() % 1;
+
+            //selected k
+            if(i < k) {
+                s = sp;
+                sk = spk;
+            }
         }
 
         if (sk < sppk) {
@@ -265,7 +277,7 @@ long long hill_climbing(vector<int>  p) {
 long long sim_anneal(vector<int>  p) {
     vector<int>  s;
     s = p;
-    long long sk = a_karmarkar_karp(s);
+    long long sk = a_karmarkar_karp(s);   //this is Resid(s)
 
     vector<int>  spp;
     spp = s;
@@ -274,16 +286,27 @@ long long sim_anneal(vector<int>  p) {
     for (int i = 0; i < max_iter; i++) {
         // Generate random neighbor
         vector<int>  sp = random_neighbor(s, 2);
-        long long spk = a_karmarkar_karp(sp);
+        long long spk = a_karmarkar_karp(sp); //this is the residual for S'
+
         if (spk < sk) {
             s = sp;
             sk = spk;
         } else {
-// probablity stuff
+            // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
+            //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
+            long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
+            long double i = rand() % 1;
+
+            //selected k
+            if(i < k) {
+                s = sp;
+                sk = spk;
+            }
         }
 
         if (sk < sppk) {
           spp = s;
+          sppk = sk;
         }
     }
 
