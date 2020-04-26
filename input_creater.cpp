@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <random>
 using namespace std;
 
 int main () {
@@ -13,10 +14,10 @@ int main () {
 
   std::random_device rd;  //Will be used to obtain a seed for the random number engine
   std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-  std::uniform_int_distribution<> dis(1, 1000000000000);
+  std::uniform_int_distribution<long long> dis(1, 1000000000000);
 
   for (int i = 0; i < 100; i++) {
-    n = dis(gen);
+    long long n = dis(gen);
     cout << n;
     file << n;// the rand gen number
   }
