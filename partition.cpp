@@ -12,13 +12,14 @@ int karmarkarKarp(vector<long long>);
 int a_karmarkar_karp(vector<long long>);
 int repeated_random(vector<int> );
 int hill_climbing(vector<int> );
-int sim_anneal(vector<int> );
+long long sim_anneal(vector<int> );
 int prepar_repeated_random(vector<int> );
 int prepar_hill_climbing(vector<int> );
 int prepar_sim_anneal(vector<int> );
 int max_iter = 25000;
 
 int main(int argc, char *argv[]) {
+    printf("hello: %lu + %lu + %lu + %lld", sizeof(long), sizeof(long long), (LONG_MAX), (__LONG_LONG_MAX__));
     srand((unsigned) time(0));
 
     int flag = atoi(argv[1]);
@@ -287,14 +288,14 @@ int hill_climbing(vector<int>  p) {
     return(sk);
 }
 
-int sim_anneal(vector<int>  p) {
+long long sim_anneal(vector<int>  p) {
     vector<int>  s;
     s = p;
-    int sk = a_karmarkar_karp(s);   //this is Resid(s)
+    long long sk = a_karmarkar_karp(s);   //this is Resid(s)
 
     vector<int>  spp;
     spp = s;
-    int sppk = a_karmarkar_karp(spp);
+    long long sppk = a_karmarkar_karp(spp);
 
     for (int i = 0; i < max_iter; i++) {
         // Generate random neighbor
@@ -305,7 +306,7 @@ int sim_anneal(vector<int>  p) {
             sk = spk;
         } else {
             //overflow? long double??
-            long double k = exp(-((long double) spk-sp)/ (pow(10.0,10.0))*pow(0.8, floor(i/300)))%1;  //i think this is right?
+            long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
             long double i = rand() % 1;
             //selected k
             if(i < k) {
