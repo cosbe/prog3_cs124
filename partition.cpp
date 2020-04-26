@@ -290,7 +290,7 @@ int hill_climbing(vector<int>  p) {
 int sim_anneal(vector<int>  p) {
     vector<int>  s;
     s = p;
-    int sk = a_karmarkar_karp(s);
+    int sk = a_karmarkar_karp(s);   //this is Resid(s)
 
     vector<int>  spp;
     spp = s;
@@ -299,16 +299,26 @@ int sim_anneal(vector<int>  p) {
     for (int i = 0; i < max_iter; i++) {
         // Generate random neighbor
         vector<int>  sp = random_neighbor(s, 2);
-        int spk = a_karmarkar_karp(sp);
+        int spk = a_karmarkar_karp(sp); //this is the residual for S'
         if (spk < sk) {
             s = sp;
             sk = spk;
         } else {
-// probablity stuff
+            //overflow? long double??
+            long double k = exp(-((long double) spk-sp)/ (pow(10.0,10.0))*pow(0.8, floor(max_iter/300)))%1;  //i think this is right?
+            long double i = rand() % 1;
+            //selected k
+            if(i < k) {
+                s = sp;
+                sk = spk;
+            }
+// probablity stuff  exp(−(res(S′)-res(S))/T(iter))
+//T(iter) = 10^10 * (0.8)^⌊iter/300⌋ 
         }
 
         if (sk < sppk) {
           spp = s;
+          sppk = sk;
         }
     }
 
