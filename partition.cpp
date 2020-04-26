@@ -8,12 +8,14 @@ using namespace std;
 
 vector<long long> A;
 vector<int> random_P(int, int);
-vector<int> random_P(int);
 int karmarkarKarp(vector<long long>);
 int a_karmarkar_karp(vector<long long>);
-int repeated_random(vector<long long> );
-int hill_climbing(vector<long long> );
-int sim_anneal(vector<long long> );
+int repeated_random(vector<int> );
+int hill_climbing(vector<int> );
+int sim_anneal(vector<int> );
+int prepar_repeated_random(vector<int> );
+int prepar_hill_climbing(vector<int> );
+int prepar_sim_anneal(vector<int> );
 int max_iter = 25000;
 
 int main(int argc, char *argv[]) {
@@ -36,53 +38,54 @@ int main(int argc, char *argv[]) {
 
     printf("Printing the matrix A: \n");
     for(int i = 0; i < A.size(); i++) {
-        printf("i is: %i and val: %d \n", i,  A[i]);
+        printf("i is: %i and val: %lld \n", i,  A[i]);
     }
 
-//   // Record amount of time it takes for each algorithm
-//   kar_karp (sorted L)
-//   repeated_random P
-//   hill_climbing P
-//   sim_anneal P
+    // initializing vector for initial solution
+    vector<int>  p;
 
-    // Generating initial random solution
-    vector<long long>  p;
     switch (algorithm) {
+      // standard kk
       case 0:
         std::cout << "\nresidual: " << karmarkarKarp(A) << "\n";
         break;
+      // repeated random
       case 1:
+        // use range 2 to create two subsets
         p = random_P(A.size(),2);
 
-
+        std::cout << "\n residual for rr: " << repeated_random(p) << "\n";
         break;
+      // hill climbing
       case 2:
         p = random_P(A.size(),2);
 
-
+        std::cout << "\n residual for hc: " << hill_climbing(p) << "\n";
         break;
+      // sim anneal
       case 3:
-
         p = random_P(A.size(),2);
 
+        std::cout << "\n residual for sa: " << sim_anneal(p) << "\n";
         break;
 
-        //pp
+      //pp repeated random
       case 11:
         p = random_P(A.size(), A.size());
 
-        std::cout << "\n residual for prr: " << repeated_random(p) << "\n";
+        std::cout << "\n residual for prr: " << prepar_repeated_random(p) << "\n";
         break;
-        //pp
+      //pp hill climb
       case 12:
         p = random_P(A.size(), A.size());
 
-        std::cout << "\n residual for phc: " << hill_climbing(p) << "\n";
+        std::cout << "\n residual for phc: " << prepar_hill_climbing(p) << "\n";
         break;
-        //pp
+      //pp sim anneal
       case 13:
         p = random_P(A.size(), A.size());
 
+        std::cout << "\n residual for psa: " << prepar_sim_anneal(p) << "\n";
         break;
     }
 }
@@ -102,44 +105,50 @@ vector<int> random_P(int n, int range) {
     return vect;
 }
 
-//range = n
-vector<int> random_P(int n) {
-    vector<int> vect(n, -1);
+// //range = n
+// vector<int> random_P(int n) {
+//     vector<int> vect(n, -1);
 
-    for (int i = 0; i < n; i++) {
-        vect[i] = (rand() % n + 1);
-    }
-    printf("Printing the rand P: \n");
-    for(int i = 0; i < vect.size(); i++) {
-        printf("i is: %i and val: %d \n", i,  vect[i]);
-    }
+//     for (int i = 0; i < n; i++) {
+//         vect[i] = (rand() % n + 1);
+//     }
+//     printf("Printing the rand P: \n");
+//     for(int i = 0; i < vect.size(); i++) {
+//         printf("i is: %i and val: %d \n", i,  vect[i]);
+//     }
 
-    return vect;
-}
+//     return vect;
+// }
 
 // Generates a random neighbor to sequence P
-vector<int> random_neighbor(vector<int> p) {
-  int n = p.size();
+vector<int> random_neighbor(vector<int> p, int range) {
   vector<int> vect;
   vect = p;
 
-  int j = rand() % n + 1;
+  printf("original input to random neighbor is: \n");
+  for(int i = 0; i < vect.size(); i++) {
+      printf("i is: %i and val: %d \n", i, vect[i]);
+  }
+
+  int j = rand() % range + 1;
 
   while(true) {
-      int i = rand() % n;       //need to change to accomodate different n. 
+      int i = rand() % p.size();
+      printf("j: %d i: %d \n", j, i);
       if (vect[i] != j) {
+
         vect[i] = j;
           printf("randomn neighbor is: \n");
           for(int i = 0; i < vect.size(); i++) {
               printf("i is: %i and val: %d \n", i, vect[i]);
           }
-        return vect;
+        break;
       }
   }
   return vect;
 }
 
-// Karmarkar Karp with P and A' - has A' and uses P? 
+// Karmarkar Karp with P and A' - has A' and uses P?
 int a_karmarkar_karp (vector<int>  p) {
     // create A' based on P and A
     vector<long long>  ap(p.size(), 0);
@@ -149,7 +158,7 @@ int a_karmarkar_karp (vector<int>  p) {
 
     printf("AP is: \n");
     for(int i = 0; i < ap.size(); i++) {
-        printf("i is: %i and val: %d \n", i, ap[i]);
+        printf("i is: %i and val: %lld \n", i, ap[i]);
     }
 
     return(karmarkarKarp(ap));
@@ -180,14 +189,14 @@ int karmarkarKarp(vector<long long> a) {
     return a[0];
 }
 
-int repeated_random(vector<long long>  p) {
-    vector<long long>  s;
+int prepar_repeated_random(vector<int>  p) {
+    vector<int>  s;
     s = p;
     int sk = a_karmarkar_karp(s);
 
     for (int i = 0; i < max_iter; i++) {
         // Generate random solution
-        vector<long long>  sp = random_P(p.size());
+        vector<int>  sp = random_P(p.size(), p.size());
         int spk = a_karmarkar_karp(sp);
         if (spk < sk) {
             s = sp;
@@ -197,14 +206,14 @@ int repeated_random(vector<long long>  p) {
     return(sk);
 }
 
-int hill_climbing(vector<long long>  p) {
-    vector<long long>  s;
+int prepar_hill_climbing(vector<int>  p) {
+    vector<int>  s;
     s = p;
     int sk = a_karmarkar_karp(s);
 
     for (int i = 0; i < max_iter; i++) {
         // Generate random neighbor
-        vector<long long>  sp = random_neighbor(s);
+        vector<int>  sp = random_neighbor(s, s.size());
         int spk = a_karmarkar_karp(sp);
         if (spk < sk) {
             s = sp;
@@ -214,18 +223,82 @@ int hill_climbing(vector<long long>  p) {
     return(sk);
 }
 
-int sim_anneal(vector<long long>  p) {
-    vector<long long>  s;
+int prepar_sim_anneal(vector<int>  p) {
+    vector<int>  s;
     s = p;
     int sk = a_karmarkar_karp(s);
 
-    vector<long long>  spp;
+    vector<int>  spp;
     spp = s;
     int sppk = a_karmarkar_karp(spp);
 
     for (int i = 0; i < max_iter; i++) {
         // Generate random neighbor
-        vector<long long>  sp = random_neighbor(s);
+        vector<int>  sp = random_neighbor(s, s.size());
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        } else {
+// probablity stuff
+        }
+
+        if (sk < sppk) {
+          spp = s;
+        }
+    }
+
+    return(sppk);
+}
+
+// All of the below functions use range 2, to simulate a swap between two subsets
+int repeated_random(vector<int>  p) {
+    vector<int>  s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate random solution
+        vector<int>  sp = random_P(p.size(), 2);
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        }
+    }
+    return(sk);
+}
+
+
+int hill_climbing(vector<int>  p) {
+    vector<int>  s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate random neighboring solution
+        vector<int>  sp = random_neighbor(s, 2);
+        int spk = a_karmarkar_karp(sp);
+        if (spk < sk) {
+            s = sp;
+            sk = spk;
+        }
+    }
+    return(sk);
+}
+
+int sim_anneal(vector<int>  p) {
+    vector<int>  s;
+    s = p;
+    int sk = a_karmarkar_karp(s);
+
+    vector<int>  spp;
+    spp = s;
+    int sppk = a_karmarkar_karp(spp);
+
+    for (int i = 0; i < max_iter; i++) {
+        // Generate random neighbor
+        vector<int>  sp = random_neighbor(s, 2);
         int spk = a_karmarkar_karp(sp);
         if (spk < sk) {
             s = sp;
