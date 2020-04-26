@@ -305,7 +305,7 @@ int sim_anneal(vector<int>  p) {
             sk = spk;
         } else {
             //overflow? long double??
-            long double k = exp(-((long double) spk-sp)/ (pow(10.0,10.0))*pow(0.8, floor(max_iter/300)))%1;  //i think this is right?
+            long double k = exp(-((long double) spk-sp)/ (pow(10.0,10.0))*pow(0.8, floor(i/300)))%1;  //i think this is right?
             long double i = rand() % 1;
             //selected k
             if(i < k) {
