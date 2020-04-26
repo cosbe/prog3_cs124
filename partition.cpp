@@ -232,6 +232,7 @@ long long prepar_sim_anneal(vector<int>  p) {
 
         if (sk < sppk) {
           spp = s;
+          sppk = sk;
         }
     }
 
