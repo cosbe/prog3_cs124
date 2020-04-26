@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#include <random>
 using namespace std;
 
 //global vars
@@ -218,10 +219,13 @@ long long prepar_sim_anneal(vector<int>  p) {
             s = sp;
             sk = spk;
         } else {
+            std::random_device rd;  //Will be used to obtain a seed for the random number engine
+            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+            std::uniform_int_distribution<long double> dis(0, 1);
             // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
             //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
             long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
-            long double i = rand() % 1;
+            long double i = dis(gen);
 
             //selected k
             if(i < k) {
@@ -293,11 +297,13 @@ long long sim_anneal(vector<int>  p) {
             s = sp;
             sk = spk;
         } else {
+            std::random_device rd;  //Will be used to obtain a seed for the random number engine
+            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+            std::uniform_int_distribution<long double> dis(0, 1);
             // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
             //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
             long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
-            long double i = rand() % 1;
-
+            long double i = dis(gen);
             //selected k
             if(i < k) {
                 s = sp;
