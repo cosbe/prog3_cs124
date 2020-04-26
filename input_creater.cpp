@@ -18,7 +18,7 @@ int main () {
 
   for (int i = 0; i < 100; i++) {
     long long n = dis(gen);
-    cout << n;
+    cout << n << "\n";
     file << n;// the rand gen number
   }
 
