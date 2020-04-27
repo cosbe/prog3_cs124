@@ -5,6 +5,7 @@
 #include <vector>
 #include <math.h>
 #include <random>
+#include <algorithm>
 using namespace std;
 
 //global vars
@@ -51,45 +52,45 @@ int main(int argc, char *argv[]) {
     switch (algorithm) {
       // standard kk
       case 0:
-        std::cout << "\nresidual: " << karmarkarKarp(A) << "\n";
+        std::cout <<karmarkarKarp(A);
         break;
       // repeated random
       case 1:
         // use range 2 to create two subsets
         p = random_P(A.size(),2);
 
-        std::cout << "\n residual for rr: " << repeated_random(p) << "\n";
+        std::cout << repeated_random(p);
         break;
       // hill climbing
       case 2:
         p = random_P(A.size(),2);
 
-        std::cout << "\n residual for hc: " << hill_climbing(p) << "\n";
+        std::cout << hill_climbing(p);
         break;
       // sim anneal
       case 3:
         p = random_P(A.size(),2);
 
-        std::cout << "\n residual for sa: " << sim_anneal(p) << "\n";
+        std::cout << sim_anneal(p);
         break;
 
       //pp repeated random
       case 11:
         p = random_P(A.size(), A.size());
 
-        std::cout << "\n residual for prr: " << prepar_repeated_random(p) << "\n";
+        std::cout << prepar_repeated_random(p);
         break;
       //pp hill climb
       case 12:
         p = random_P(A.size(), A.size());
 
-        std::cout << "\n residual for phc: " << prepar_hill_climbing(p) << "\n";
+        std::cout << prepar_hill_climbing(p);
         break;
       //pp sim anneal
       case 13:
         p = random_P(A.size(), A.size());
 
-        std::cout << "\n residual for psa: " << prepar_sim_anneal(p) << "\n";
+        std::cout << prepar_sim_anneal(p);
         break;
     }
 }
@@ -99,7 +100,7 @@ vector<int> random_P(int n, int range) {
     vector<int> vect(n, -1);
 
     for (int i = 0; i < n; i++) {
-        vect[i] = (rand() % range + 1);
+        vect[i] = (rand() % range);
     }
     // printf("Printing the rand P: \n");
     // for(int i = 0; i < vect.size(); i++) {
@@ -113,8 +114,12 @@ vector<int> random_P(int n, int range) {
 vector<int> random_neighbor(vector<int> p, int range) {
   vector<int> vect;
   vect = p;
+  // printf("Printing the input to random neighbor P: \n");
+  // for(int i = 0; i < vect.size(); i++) {
+  //     printf("i is: %i and val: %d \n", i,  vect[i]);
+  // }
 
-  int j = rand() % range + 1;
+  int j = rand() % range;
 
   while(true) {
       int i = rand() % p.size();
@@ -132,7 +137,7 @@ long long a_karmarkar_karp (vector<int>  p) {
     // create A' based on P and A
     vector<long long>  ap(p.size(), 0);
     for(int i = 0; i < p.size();  i++) {
-        ap[p[i] - 1]+=A[i];
+        ap[p[i]]+=A[i];
     }
 
     // printf("AP is: \n");
@@ -220,13 +225,12 @@ long long prepar_sim_anneal(vector<int>  p) {
             sk = spk;
         } else {
             std::random_device rd;  //Will be used to obtain a seed for the random number engine
-            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-            std::uniform_int_distribution<long double> dis(0, 1);
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<double> dis(0.0, 1.0);
             // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
             //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
-            long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
-            long double i = dis(gen);
-
+            double k = fmod(exp(-((long double) spk - sk)/((pow(10.0,10.0))*pow(0.8, floor((long double) i/300)))),(long double) 1.0);  //i think this is right?
+            double i = dis(gen);
             //selected k
             if(i < k) {
                 s = sp;
@@ -298,12 +302,13 @@ long long sim_anneal(vector<int>  p) {
             sk = spk;
         } else {
             std::random_device rd;  //Will be used to obtain a seed for the random number engine
-            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-            std::uniform_int_distribution<long double> dis(0, 1);
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<double> dis(0.0, 1.0);
+
             // probablity stuff  exp(−(res(S′)-res(S))/T(iter))
             //T(iter) = 10^10 * (0.8)^⌊iter/300⌋
-            long double k = fmod(exp(-((long double) spk - sk)/(pow(10.0,10.0))*pow(0.8, floor((long double) i/300))),(long double) 1.0);  //i think this is right?
-            long double i = dis(gen);
+            double k = fmod(exp(-((long double) spk - sk)/((pow(10.0,10.0))*pow(0.8, floor((long double) i/300)))),(long double) 1.0);  //i think this is right?
+            double i = dis(gen);
             //selected k
             if(i < k) {
                 s = sp;
