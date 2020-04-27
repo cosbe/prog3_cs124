@@ -26,7 +26,7 @@ long long prepar_sim_anneal(vector<int> );
 int main(int argc, char *argv[]) {
     srand((unsigned) time(0));
 
-    int flag = atoi(argv[1]);
+    // int flag = atoi(argv[1]);
     int algorithm = atoi(argv[2]);
 
     // Reading file into vector A
@@ -52,45 +52,45 @@ int main(int argc, char *argv[]) {
     switch (algorithm) {
       // standard kk
       case 0:
-        std::cout <<karmarkarKarp(A);
+        std::cout << karmarkarKarp(A) << "\n";
         break;
       // repeated random
       case 1:
         // use range 2 to create two subsets
         p = random_P(A.size(),2);
 
-        std::cout << repeated_random(p);
+        std::cout << repeated_random(p) << "\n";
         break;
       // hill climbing
       case 2:
         p = random_P(A.size(),2);
 
-        std::cout << hill_climbing(p);
+        std::cout << hill_climbing(p) << "\n";
         break;
       // sim anneal
       case 3:
         p = random_P(A.size(),2);
 
-        std::cout << sim_anneal(p);
+        std::cout << sim_anneal(p) << "\n";
         break;
 
       //pp repeated random
       case 11:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_repeated_random(p);
+        std::cout << prepar_repeated_random(p) << "\n";
         break;
       //pp hill climb
       case 12:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_hill_climbing(p);
+        std::cout << prepar_hill_climbing(p) << "\n";
         break;
       //pp sim anneal
       case 13:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_sim_anneal(p);
+        std::cout << prepar_sim_anneal(p) << "\n";
         break;
     }
 }
@@ -118,17 +118,43 @@ vector<int> random_neighbor(vector<int> p, int range) {
   // for(int i = 0; i < vect.size(); i++) {
   //     printf("i is: %i and val: %d \n", i,  vect[i]);
   // }
+    if(range == 2) {
+        //A random move on this state space can be defined as follows. 
+        //Choose two random indices i and j from [1,n] with i ̸= j. 
+        //Set si to −si and with probability 1/2, set sj to −sj. 
+        //That is, with probability 1/2, we just try to move one element to the other set; 
+        //with probability 1/2, we try to swap two elements. 
+        //(The two elements we try to swap may be from the same set or different sets.)
+        int i = rand() % vect.size();
+        int j = rand() % vect.size();
+        while(i == j) {
+            //hopefully no infinite loop
+            j = rand() % vect.size();
+        }
 
-  int j = rand() % range;
+        //hopefully this works 0 + 1 = 1 % 2 = 1, 1 + 1 = 2 %2 = 0;
+        vect[i] = (vect[i]+1)%2;
 
-  while(true) {
-      int i = rand() % p.size();
+        std::random_device rd;  //Will be used to obtain a seed for the random number engine
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(0, 1);
 
-      if (vect[i] != j) { // make a swap if the index values are not the same
-        vect[i] = j;
-        break;
-      }
-  }
+        if(dis(gen) == 0) {
+            vect[j] = (vect[j]+1)%2;  //flip the switch
+        }
+    }
+    else {
+        int j = rand() % range;
+
+        while(true) {
+            int i = rand() % p.size();
+
+            if (vect[i] != j) { // make a swap if the index values are not the same
+                vect[i] = j;
+                break;
+            }
+        }
+    }
   return vect;
 }
 
