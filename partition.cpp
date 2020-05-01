@@ -52,45 +52,45 @@ int main(int argc, char *argv[]) {
     switch (algorithm) {
       // standard kk
       case 0:
-        std::cout << karmarkarKarp(A) << "\n";
+        std::cout << "0: KK"<< karmarkarKarp(A) << "\n";
         break;
       // repeated random
       case 1:
         // use range 2 to create two subsets
         p = random_P(A.size(),2);
 
-        std::cout << repeated_random(p) << "\n";
+        std::cout << "1: PP RR" << repeated_random(p) << "\n";
         break;
       // hill climbing
       case 2:
         p = random_P(A.size(),2);
 
-        std::cout << hill_climbing(p) << "\n";
+        std::cout << "2: PP HC" << hill_climbing(p) << "\n";
         break;
       // sim anneal
       case 3:
         p = random_P(A.size(),2);
 
-        std::cout << sim_anneal(p) << "\n";
+        std::cout << "3: SA" << sim_anneal(p) << "\n";
         break;
 
       //pp repeated random
       case 11:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_repeated_random(p) << "\n";
+        std::cout << "11: PP HC" << prepar_repeated_random(p) << "\n";
         break;
       //pp hill climb
       case 12:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_hill_climbing(p) << "\n";
+        std::cout << "12: PP HC" << prepar_hill_climbing(p) << "\n";
         break;
       //pp sim anneal
       case 13:
         p = random_P(A.size(), A.size());
 
-        std::cout << prepar_sim_anneal(p) << "\n";
+        std::cout << "13: PP SA" << prepar_sim_anneal(p) << "\n";
         break;
     }
 }
